@@ -145,7 +145,7 @@ public class RPGRunner extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) { // Looks to timer?
-			for(RPGCharacter player : players) player.move();
+			for(RPGCharacter player : players) player.move(players);
 			
 			for(RPGCharacter player : players) {
 				for(RPGCharacter enemy : players) {

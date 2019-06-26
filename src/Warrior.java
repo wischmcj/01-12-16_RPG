@@ -1,4 +1,5 @@
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -37,8 +38,8 @@ public class Warrior extends RPGCharacter {
 	}
 	
 	@Override
-	public void move() {
-		super.move();
+	public void move(ArrayList<RPGCharacter> enemys) {
+		super.move(enemys);
 	}
 	
 	@Override 
@@ -123,5 +124,20 @@ public class Warrior extends RPGCharacter {
 		if (cha > RPGType.WARRIOR.getMaxCha()) cha = RPGType.WARRIOR.getMaxCha();
 		super.setExp(cha);
 	}
-	
+
+	@Override
+	public double[] target( ArrayList<RPGCharacter> players){
+		double dist;
+		double max=-1;
+		double[] coord = new double[2];
+		RPGCharacter target = null;
+		for (RPGCharacter enemy : players) {
+			dist = this.getRange(enemy);
+			if(dist > max) target = enemy;
+		}
+		coord[0] = target.getXPos();
+		coord[1] = target.getYPos();
+		return coord;
+		
+	}
 }

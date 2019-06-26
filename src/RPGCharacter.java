@@ -1,6 +1,7 @@
 // ROBERT DOUGHT, COLLIN WISCHMEYER
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -44,12 +45,35 @@ public abstract class RPGCharacter {
 		System.out.println("Error");
 	}
 	
-	public void move() {
+	public abstract double[] target(ArrayList<RPGCharacter> enemy);
+		
+	public void move(ArrayList<RPGCharacter> enemys) {
+		double[] target = this.target(enemys);
+		double maxX = this.getXPos() - target[0];
+		double maxY = this.getYPos() - target[1];
+		double xMove;
+		double yMove;
+	
 		Random rand = new Random();
-		double xMove = this.getCurrentSpeed() * rand.nextDouble() * 
+		double speed =this.getCurrentSpeed(); 
+		
+		if(maxX<speed) {
+			xMove = speed * rand.nextDouble() * 
 				(rand.nextBoolean()?1:-1);
-		double yMove = this.getCurrentSpeed() * rand.nextDouble() * 
+		}
+		else {
+			xMove = maxY * rand.nextDouble() * 
 				(rand.nextBoolean()?1:-1);
+		}
+		
+		if(maxY<speed) {
+			yMove = speed * rand.nextDouble() * 
+				(rand.nextBoolean()?1:-1);
+		}
+		else {
+			yMove = maxX * rand.nextDouble() * 
+					(rand.nextBoolean()?1:-1);
+		}
 		
 		xPos = this.getXPos() + xMove;
 		yPos = this.getYPos() + yMove;
